@@ -179,6 +179,14 @@
     width: 350px;
 }
 
+#myNavCubeCanvas {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  bottom: 100px;
+  right: 50px;
+  z-index: 200000;
+}
 
 .show{
     display: block;

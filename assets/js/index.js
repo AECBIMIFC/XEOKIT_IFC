@@ -10,7 +10,9 @@ import {
   WebIFCLoaderPlugin,
   FastNavPlugin,
   DistanceMeasurementsPlugin,
-  SectionPlanesPlugin
+  SectionPlanesPlugin,
+  math,
+  NavCubePlugin
 } from "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js";
 
 //------------------------------------------------------------------------------------------------------------------
@@ -762,16 +764,59 @@ const sectionPlanes = new SectionPlanesPlugin(viewer, {
   overviewVisible: true
 });
 
-sectionPlanes.createSectionPlane({
-  id: "mySectionPlane",
-  pos: [1.30, 2.46, 4.93],
-  dir: [0.0, -0.09, -0.79]
+var i = 1;
+
+viewer.scene.input.on("dblclick", (coords) => {
+
+    var pickResult = viewer.scene.pick({
+        canvasPos: coords,
+        pickSurface: true  // <<------ This causes picking to find the intersection point on the entity
+    });
+
+    if (pickResult && pickResult.worldNormal) { // Disallow SectionPlanes on point clouds, because points don't have normals
+
+        const sectionPlane = sectionPlanes.createSectionPlane({
+            pos: pickResult.worldPos,
+            dir: math.mulVec3Scalar(pickResult.worldNormal, -1)
+        });
+
+        sectionPlanes.showControl(sectionPlane.id);
+
+        i++;
+    }
 });
 
-sectionPlanes.createSectionPlane({
-  id: "mySectionPlane2",
-  pos: [1.30, 2.46, 4.93],
-  dir: [0.0, -0.09, -0.79]
+
+//------------------------------------------------------------------------------------------------------------------
+// NavCube
+//------------------------------------------------------------------------------------------------------------------
+
+new NavCubePlugin(viewer, {
+  canvasId: "myNavCubeCanvas",
+  visible: true,           // Initially visible (default)
+  cameraFly: true,       // Fly camera to each selected axis/diagonal
+  cameraFitFOV: 45,        // How much field-of-view the scene takes once camera has fitted it to view
+  cameraFlyDuration: 0.5, // How long (in seconds) camera takes to fly to each new axis/diagonal
+
+  // Custom color configurations
+
+  // We can optionally supply a uniform color for the whole cube:
+
+  color: "#99FF99",      // Default value
+
+  // We can also optionally supply a separate color per face,
+  // which will override our uniform color, if we supplied that:
+
+  frontColor: "#55FF55", // Default values
+  backColor: "#55FF55",
+  leftColor: "#FF5555",
+  rightColor: "#FF5555",
+  topColor: "#5555FF",
+  bottomColor: "#5555FF",
+
+  // We can also supply a color to highlight NavCuve regions
+  // as we hover the pointer over them:
+
+  hoverColor: "rgba(0,0.5,0,0.4)" // Default value
 });
 
-sectionPlanes.showControl("mySectionPlane2");
