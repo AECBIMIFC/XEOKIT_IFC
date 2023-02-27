@@ -55,6 +55,8 @@ viewer.scene.sao.kernelRadius = 170;
 
 viewer.cameraControl.followPointer = true;
 
+
+
 //----------------------------------------------------------------------------------------------------------------------
 // FastNavigation
 //----------------------------------------------------------------------------------------------------------------------
@@ -704,7 +706,7 @@ archivoIFC.addEventListener(
 );
 
 const model = webIFCLoader.load({
-  src: "TESTED_Simple_project_01.ifc",
+  src: "SYNCHRO_BRIDGE.ifc",
   edges: true,
   sao: true, // Enable ambient shadows for this model
   pbr: true, // Enable physically-based rendering for this model
@@ -721,6 +723,9 @@ model.on("loaded", function () {
     model.numEntities;
 });
 
+model.on("loaded", function () {
+  viewer.cameraFlight.flyTo(model);
+});
 //------------------------------------------------------------------------------------------------------------------
 // Mouse over entities to highlight them
 //------------------------------------------------------------------------------------------------------------------
