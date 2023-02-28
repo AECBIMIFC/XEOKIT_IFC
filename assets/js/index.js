@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------------------------------------------
-// Import the modules we need for this example
+// Import the modules
 //------------------------------------------------------------------------------------------------------------------
 
 import {
@@ -14,6 +14,21 @@ import {
   math,
   NavCubePlugin
 } from "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js";
+
+import {Server, BIMViewer, LocaleService} from "../dist/xeokit-bim-viewer.es.js";
+import {messages as localeMessages} from "../dist/messages.js";
+
+
+window.onload = function () {
+
+  const requestParams = getRequestParams();
+  const locale = requestParams.locale || "es";
+  const projectId = requestParams.projectId;
+
+  if (!projectId) {
+      return;
+  }
+}
 
 //------------------------------------------------------------------------------------------------------------------
 // Create a Viewer, arrange the camera
@@ -104,6 +119,12 @@ const treeView = new TreeViewPlugin(viewer, {
 const treeViewContextMenu = new ContextMenu({
   items: [
     [
+      {
+        title: "Inspect properties",
+        doAction: function (context) {
+    
+        },
+      },
       {
         title: "View Fit",
         doAction: function (context) {
@@ -825,3 +846,35 @@ new NavCubePlugin(viewer, {
   hoverColor: "rgba(0,0.5,0,0.4)" // Default value
 });
 
+//------------------------------------------------------------------------------------------------------------------
+// Show Info
+//------------------------------------------------------------------------------------------------------------------
+/**
+ * TODO: MIRAR 
+ */
+// const openExplorer = requestParams.openExplorer;
+//         setExplorerOpen(openExplorer === "true");
+
+//         const enableEditModels = (requestParams.enableEditModels === "true");
+
+
+// const server = new Server({
+//   dataDir: "./data"
+// });
+
+// const myBIMViewer = new BIMViewer(server, {
+//   canvasElement: document.getElementById("myCanvas"),                // The 3D WebGL canvas
+//   explorerElement: document.getElementById("myExplorer"),            // Container for the explorer panel
+//   toolbarElement: document.getElementById("myToolbar"),              // Container for the toolbar
+//   navCubeCanvasElement: document.getElementById("myNavCubeCanvas"),  // Canvas for the NavCube
+//   busyModelBackdropElement: document.querySelector(".xeokit-busy-modal-backdrop") // Busy modal dialog backdrop element
+// });
+
+
+// function getRequestParams() {
+//   const vars = {};
+//   window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, (m, key, value) => {
+//       vars[key] = value;
+//   });
+//   return vars;
+// }
