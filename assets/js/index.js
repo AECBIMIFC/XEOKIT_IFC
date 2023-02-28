@@ -19,16 +19,6 @@ import {Server, BIMViewer, LocaleService} from "../dist/xeokit-bim-viewer.es.js"
 import {messages as localeMessages} from "../dist/messages.js";
 
 
-window.onload = function () {
-
-  const requestParams = getRequestParams();
-  const locale = requestParams.locale || "es";
-  const projectId = requestParams.projectId;
-
-  if (!projectId) {
-      return;
-  }
-}
 
 //------------------------------------------------------------------------------------------------------------------
 // Create a Viewer, arrange the camera
@@ -118,13 +108,7 @@ const treeView = new TreeViewPlugin(viewer, {
 
 const treeViewContextMenu = new ContextMenu({
   items: [
-    [
-      {
-        title: "Inspect properties",
-        doAction: function (context) {
-    
-        },
-      },
+    [     
       {
         title: "View Fit",
         doAction: function (context) {
@@ -716,37 +700,39 @@ const webIFCLoader = new WebIFCLoaderPlugin(viewer, {
 });
 
 let archivoIFC = document.getElementById("fileInput");
+let ifcURL ="";
 archivoIFC.addEventListener(
   "change",
   (changed) => {
-    const ifcURL = URL.createObjectURL(changed.target.files[0]);
-    console.log(ifcURL);
+    ifcURL = URL.createObjectURL(changed.target.files[0]);
+    const model = webIFCLoader.load({
+      src: ifcURL,
+      edges: true,
+      sao: true, // Enable ambient shadows for this model
+      pbr: true, // Enable physically-based rendering for this model
+    });
+    model.on("loaded", function () {
+      viewer.cameraFlight.flyTo(model);
+    });
     $("#ifcs").append("<p>" + archivoIFC.files[0].name + "<p>");
   },
   false
 );
 
-const model = webIFCLoader.load({
-  src: "SYNCHRO_BRIDGE.ifc",
-  edges: true,
-  sao: true, // Enable ambient shadows for this model
-  pbr: true, // Enable physically-based rendering for this model
-});
 
-const t0 = performance.now();
-document.getElementById("time").innerHTML = "Loading model...";
-model.on("loaded", function () {
-  const t1 = performance.now();
-  document.getElementById("time").innerHTML =
-    "Model loaded in " +
-    Math.floor(t1 - t0) / 1000.0 +
-    " seconds<br>Objects: " +
-    model.numEntities;
-});
 
-model.on("loaded", function () {
-  viewer.cameraFlight.flyTo(model);
-});
+// const t0 = performance.now();
+// document.getElementById("time").innerHTML = "Loading model...";
+// model.on("loaded", function () {
+//   const t1 = performance.now();
+//   document.getElementById("time").innerHTML =
+//     "Model loaded in " +
+//     Math.floor(t1 - t0) / 1000.0 +
+//     " seconds<br>Objects: " +
+//     model.numEntities;
+// });
+
+
 //------------------------------------------------------------------------------------------------------------------
 // Mouse over entities to highlight them
 //------------------------------------------------------------------------------------------------------------------
