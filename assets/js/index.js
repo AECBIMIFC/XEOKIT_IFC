@@ -12,13 +12,15 @@ import {
   DistanceMeasurementsPlugin,
   SectionPlanesPlugin,
   math,
-  NavCubePlugin
+  NavCubePlugin,
 } from "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js";
 
-import {Server, BIMViewer, LocaleService} from "../dist/xeokit-bim-viewer.es.js";
-import {messages as localeMessages} from "../dist/messages.js";
-
-
+import {
+  Server,
+  BIMViewer,
+  LocaleService,
+} from "../dist/xeokit-bim-viewer.es.js";
+import { messages as localeMessages } from "../dist/messages.js";
 
 //------------------------------------------------------------------------------------------------------------------
 // Create a Viewer, arrange the camera
@@ -59,8 +61,6 @@ viewer.scene.sao.numSamples = 60;
 viewer.scene.sao.kernelRadius = 170;
 
 viewer.cameraControl.followPointer = true;
-
-
 
 //----------------------------------------------------------------------------------------------------------------------
 // FastNavigation
@@ -108,7 +108,7 @@ const treeView = new TreeViewPlugin(viewer, {
 
 const treeViewContextMenu = new ContextMenu({
   items: [
-    [     
+    [
       {
         title: "View Fit",
         doAction: function (context) {
@@ -474,6 +474,12 @@ const objectContextMenu = new ContextMenu({
   items: [
     [
       {
+        title: "Obtener id",
+        doAction: function (context) {
+          console.log(context.entity.id);
+        },
+      },
+      {
         title: "View Fit",
         doAction: function (context) {
           const viewer = context.viewer;
@@ -700,7 +706,7 @@ const webIFCLoader = new WebIFCLoaderPlugin(viewer, {
 });
 
 let archivoIFC = document.getElementById("fileInput");
-let ifcURL ="";
+let ifcURL = "";
 archivoIFC.addEventListener(
   "change",
   (changed) => {
@@ -719,8 +725,6 @@ archivoIFC.addEventListener(
   false
 );
 
-
-
 // const t0 = performance.now();
 // document.getElementById("time").innerHTML = "Loading model...";
 // model.on("loaded", function () {
@@ -731,7 +735,6 @@ archivoIFC.addEventListener(
 //     " seconds<br>Objects: " +
 //     model.numEntities;
 // });
-
 
 //------------------------------------------------------------------------------------------------------------------
 // Mouse over entities to highlight them
@@ -766,38 +769,36 @@ window.viewer = viewer;
 
 // distanceMeasurements.control.activate();
 
-
 //------------------------------------------------------------------------------------------------------------------
 // Planos
 //------------------------------------------------------------------------------------------------------------------
 
 const sectionPlanes = new SectionPlanesPlugin(viewer, {
   overviewCanvasId: "mySectionPlanesOverviewCanvas",
-  overviewVisible: true
+  overviewVisible: true,
 });
 
 var i = 1;
 
 viewer.scene.input.on("dblclick", (coords) => {
+  var pickResult = viewer.scene.pick({
+    canvasPos: coords,
+    pickSurface: true, // <<------ This causes picking to find the intersection point on the entity
+  });
 
-    var pickResult = viewer.scene.pick({
-        canvasPos: coords,
-        pickSurface: true  // <<------ This causes picking to find the intersection point on the entity
+  if (pickResult && pickResult.worldNormal) {
+    // Disallow SectionPlanes on point clouds, because points don't have normals
+
+    const sectionPlane = sectionPlanes.createSectionPlane({
+      pos: pickResult.worldPos,
+      dir: math.mulVec3Scalar(pickResult.worldNormal, -1),
     });
 
-    if (pickResult && pickResult.worldNormal) { // Disallow SectionPlanes on point clouds, because points don't have normals
+    sectionPlanes.showControl(sectionPlane.id);
 
-        const sectionPlane = sectionPlanes.createSectionPlane({
-            pos: pickResult.worldPos,
-            dir: math.mulVec3Scalar(pickResult.worldNormal, -1)
-        });
-
-        sectionPlanes.showControl(sectionPlane.id);
-
-        i++;
-    }
+    i++;
+  }
 });
-
 
 //------------------------------------------------------------------------------------------------------------------
 // NavCube
@@ -805,16 +806,16 @@ viewer.scene.input.on("dblclick", (coords) => {
 
 new NavCubePlugin(viewer, {
   canvasId: "myNavCubeCanvas",
-  visible: true,           // Initially visible (default)
-  cameraFly: true,       // Fly camera to each selected axis/diagonal
-  cameraFitFOV: 45,        // How much field-of-view the scene takes once camera has fitted it to view
+  visible: true, // Initially visible (default)
+  cameraFly: true, // Fly camera to each selected axis/diagonal
+  cameraFitFOV: 45, // How much field-of-view the scene takes once camera has fitted it to view
   cameraFlyDuration: 0.5, // How long (in seconds) camera takes to fly to each new axis/diagonal
 
   // Custom color configurations
 
   // We can optionally supply a uniform color for the whole cube:
 
-  color: "#99FF99",      // Default value
+  color: "#99FF99", // Default value
 
   // We can also optionally supply a separate color per face,
   // which will override our uniform color, if we supplied that:
@@ -829,20 +830,19 @@ new NavCubePlugin(viewer, {
   // We can also supply a color to highlight NavCuve regions
   // as we hover the pointer over them:
 
-  hoverColor: "rgba(0,0.5,0,0.4)" // Default value
+  hoverColor: "rgba(0,0.5,0,0.4)", // Default value
 });
 
 //------------------------------------------------------------------------------------------------------------------
 // Show Info
 //------------------------------------------------------------------------------------------------------------------
 /**
- * TODO: MIRAR 
+ * TODO: MIRAR
  */
 // const openExplorer = requestParams.openExplorer;
 //         setExplorerOpen(openExplorer === "true");
 
 //         const enableEditModels = (requestParams.enableEditModels === "true");
-
 
 // const server = new Server({
 //   dataDir: "./data"
@@ -856,7 +856,6 @@ new NavCubePlugin(viewer, {
 //   busyModelBackdropElement: document.querySelector(".xeokit-busy-modal-backdrop") // Busy modal dialog backdrop element
 // });
 
-
 // function getRequestParams() {
 //   const vars = {};
 //   window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, (m, key, value) => {
@@ -864,3 +863,6 @@ new NavCubePlugin(viewer, {
 //   });
 //   return vars;
 // }
+
+
+
