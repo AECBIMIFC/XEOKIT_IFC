@@ -6,8 +6,7 @@ import {
   Viewer,
   XKTLoaderPlugin,
   ContextMenu,
-  TreeViewPlugin,
-  WebIFCLoaderPlugin,
+  TreeViewPlugin,  
   FastNavPlugin,
   DistanceMeasurementsPlugin,
   SectionPlanesPlugin,
@@ -66,35 +65,35 @@ viewer.cameraControl.followPointer = true;
 // FastNavigation
 //----------------------------------------------------------------------------------------------------------------------
 
-// new FastNavPlugin(viewer, {
-//   // Don't show edges while we interact (default is true)
-//   hideEdges: true,
+new FastNavPlugin(viewer, {
+  // Don't show edges while we interact (default is true)
+  hideEdges: true,
 
-//   // Don't show ambient shadows (SAO) while we interact (default is true)
-//   hideSAO: true,
+  // Don't show ambient shadows (SAO) while we interact (default is true)
+  hideSAO: true,
 
-//   // No physically-based rendering (PBR) while we interact (default is true)
-//   hidePBR: true,
+  // No physically-based rendering (PBR) while we interact (default is true)
+  hidePBR: true,
 
-//   // Hide transparent objects while we interact (default is false)
-//   // We don't care if the windows temporarily dissapear while we move around.
-//   hideTransparentObjects: true,
+  // Hide transparent objects while we interact (default is false)
+  // We don't care if the windows temporarily dissapear while we move around.
+  hideTransparentObjects: true,
 
-//   // Scale the canvas resolution while we interact (default is false).
-//   // This makes the canvas slightly blurry while we're interacting, but
-//   // draws 75% less pixels.
-//   scaleCanvasResolution: true,
+  // Scale the canvas resolution while we interact (default is false).
+  // This makes the canvas slightly blurry while we're interacting, but
+  // draws 75% less pixels.
+  scaleCanvasResolution: true,
 
-//   // Factor by which we scale canvas when we interact (default is 0.6)
-//   scaleCanvasResolutionFactor: 0.5,
+  // Factor by which we scale canvas when we interact (default is 0.6)
+  scaleCanvasResolutionFactor: 0.5,
 
-//   // When we stop interacting, have a delay before restoring
-//   // normal render (default is true)
-//   delayBeforeRestore: true,
+  // When we stop interacting, have a delay before restoring
+  // normal render (default is true)
+  delayBeforeRestore: true,
 
-//   // The delay duration, in seconds (default is 0.5)
-//   delayBeforeRestoreSeconds: 0.5,
-// });
+  // The delay duration, in seconds (default is 0.5)
+  delayBeforeRestoreSeconds: 0.5,
+});
 
 //----------------------------------------------------------------------------------------------------------------------
 // Create a tree view
@@ -692,31 +691,26 @@ viewer.cameraControl.on("rightClick", function (e) {
 //----------------------------------------------------------------------------------------------------------------------
 // Load a model
 //----------------------------------------------------------------------------------------------------------------------
-
-// const xktLoader = new XKTLoaderPlugin(viewer);
-// const model = xktLoader.load({
-//     id: "myModel",
-//     src: "Duplex.ifc.xkt",
-//     edges: true,
-//     excludeUnclassifiedObjects: false
-// });
-
-const webIFCLoader = new WebIFCLoaderPlugin(viewer, {
-  wasmPath: "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/",
-});
-
 let archivoIFC = document.getElementById("fileInput");
 let ifcURL = "";
+const xktLoader = new XKTLoaderPlugin(viewer);
+
+
+// const webIFCLoader = new WebIFCLoaderPlugin(viewer, {
+//   wasmPath: "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/",
+// });
+
+
 archivoIFC.addEventListener(
   "change",
   (changed) => {
     ifcURL = URL.createObjectURL(changed.target.files[0]);
-    const model = webIFCLoader.load({
+    const model = xktLoader.load({
+      id: "myModel",
       src: ifcURL,
       edges: true,
-      sao: true, // Enable ambient shadows for this model
-      pbr: true, // Enable physically-based rendering for this model
-    });
+      excludeUnclassifiedObjects: false
+  });
     model.on("loaded", function () {
       viewer.cameraFlight.flyTo(model);
     });
@@ -725,16 +719,6 @@ archivoIFC.addEventListener(
   false
 );
 
-// const t0 = performance.now();
-// document.getElementById("time").innerHTML = "Loading model...";
-// model.on("loaded", function () {
-//   const t1 = performance.now();
-//   document.getElementById("time").innerHTML =
-//     "Model loaded in " +
-//     Math.floor(t1 - t0) / 1000.0 +
-//     " seconds<br>Objects: " +
-//     model.numEntities;
-// });
 
 //------------------------------------------------------------------------------------------------------------------
 // Mouse over entities to highlight them
