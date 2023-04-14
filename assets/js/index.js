@@ -704,7 +704,7 @@ const xktLoader = new XKTLoaderPlugin(viewer);
 archivoIFC.addEventListener(
   "change",
   (changed) => {
-    ifcURL = URL.createObjectURL(changed.target.files[0]);
+    ifcURL = URL.createObjectURL(changed.target.files[0]);    
     const model = xktLoader.load({
       id: "myModel",
       src: ifcURL,
