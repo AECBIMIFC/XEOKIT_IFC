@@ -1,0 +1,40 @@
+{
+    "id": "FGCSA2",
+    "name": "FGCSA2",
+    "models": [
+        {
+            "id": "FGCSAINF",
+            "name": "FGCSA-PC-02.08-BIM-0600-INF",            
+            "globalizeObjectIds": true
+        },
+        {
+            "id": "FGCSADUR",
+            "name": "FGCSA-PC-02.08-BIM-1400-DUR",            
+            "globalizeObjectIds": true
+        },
+        {
+            "id": "FGCSAARQ",
+            "name": "FGCSA-PC-02.08-BIM-0500-ARQ",            
+            "globalizeObjectIds": true
+        },
+        {
+            "id": "FGCSAEST",
+            "name": "FGCSA-PC-02.08-BIM-0300-EST",            
+            "globalizeObjectIds": true
+        }
+
+    ],
+    "viewerConfigs": {
+    },
+    "viewerContent": {
+        "modelsLoaded": [
+            "FGCSAINF", "FGCSADUR", "FGCSAARQ", "FGCSAEST"
+        ]
+    },
+    "viewerState": {
+        "tabOpen": "classes",
+        "expandObjectsTree": 1,
+        "expandClassesTree": 1,
+        "expandStoreysTree": 2
+    }
+}
