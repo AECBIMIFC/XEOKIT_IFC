@@ -67,7 +67,7 @@ ul, li {
   position: fixed;
   height: 100%;
   color: #fff;
-  background: #03103f;
+  background: rgb(107, 150, 207) ; 
   overflow: auto;
   border-right: 2px solid #212529;
   padding: 0px;
@@ -174,7 +174,7 @@ ul, li {
   position: absolute;
   height: 100%;
   color: #fff;
-  background: #03103f;
+  background: rgb(107, 150, 207);;
   overflow: auto;
   border-left: 2px solid #212529;
   padding: 0;

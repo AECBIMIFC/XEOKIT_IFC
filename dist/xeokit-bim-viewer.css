@@ -114,7 +114,7 @@
 }
 
 .xeokit-tabs .xeokit-tab.active .xeokit-tab-btn {
-    background-color: #313961;
+    background-color:rgb(107, 150, 207);
 }
 
 @media (min-width: 40em) {
@@ -133,7 +133,7 @@
     font-size: 16px;
     background-color: transparent;
     border-top: 2px solid #dcdcdc;
-    color: #CFCFCF;
+    color: #fff;
     display: block;
     font-weight: bold;
     padding: 0.75em 5px;
@@ -162,7 +162,7 @@
 }
 
 .xeokit-tabs .xeokit-tab-content {
-    background: #03103F;
+    background: rgb(107, 150, 207);
     display: none;
     padding-top: 2em;
     padding-left: 0;
@@ -212,7 +212,7 @@
 
 .xeokit-tabs .xeokit-tab-btn.disabled {
     opacity: .55;
-    color: #99A4AD;
+    color: #fff;
 }
 
 .xeokit-modelsTab {
@@ -238,8 +238,8 @@
 }
 
 .xeokit-modelsTab .xeokit-form-check span.disabled {
-    color: #99A4AD;
-    background-color: #03103F;
+    color: #fff;
+    background-color: rgb(107, 150, 207);
 }
 
 .xeokit-modelsTab .xeokit-form-check span:hover {
@@ -250,8 +250,8 @@
 }
 
 .xeokit-modelsTab .xeokit-form-check span.disabled:hover {
-    color: #99A4AD;
-    background-color: #03103F;
+    color: #fff;
+    background-color: rgb(26, 68, 136);
     cursor: default;
 }
 
