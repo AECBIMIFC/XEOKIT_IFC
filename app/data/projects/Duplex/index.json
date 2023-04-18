@@ -1,0 +1,23 @@
+{
+    "id": "Clinica_MEP",
+    "name": "Clinica_MEP",
+    "models": [
+        {
+            "id": "design",
+            "name": "Clinica_MEP"
+        }
+    ],
+    "viewerConfigs": {
+    },
+    "viewerContent": {
+        "modelsLoaded": [
+            "design"
+        ]
+    },
+    "viewerState": {
+        "tabOpen": "classes",
+        "expandObjectsTree": 1,
+        "expandClassesTree": 1,
+        "expandStoreysTree": 1
+    }
+}

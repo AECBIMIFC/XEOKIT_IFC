@@ -1,0 +1,34 @@
+{
+    "id": "holterTower",
+    "name": "HolterTower",
+    "models": [
+        {
+            "id": "design",
+            "name": "Holter Tower",
+            "backfaces": false
+        }
+    ],
+    "viewerConfigs": {
+        "backgroundColor": [
+            0.95,
+            0.95,
+            1.0
+        ],
+        
+        "highlightGlowThrough": true
+    },
+    "viewerContent": {
+        "modelsLoaded": [
+            "design"
+        ]
+    },
+    "viewerState": {
+        "tabOpen": "classes",
+        "expandObjectsTree": 3,
+        "expandClassesTree": 1,
+        "expandStoreysTree": 1,
+        "saoEnabled": "true",
+        "objectColorSource": "viewer"
+       
+    }
+}

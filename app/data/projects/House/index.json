@@ -1,0 +1,27 @@
+{
+    "id": "House",
+    "name": "House",
+    "models": [
+        {
+            "id": "design",
+            "name": "House"            
+        }
+    ],
+    "viewerConfigs": {
+        
+    },
+    "viewerContent": {
+        "modelsLoaded": [
+            "design"
+        ]
+    },
+    "viewerState": {
+
+        "viewCubeEnabled": true,
+        "threeDEnabled": true,
+        "tabOpen": "classes",
+        "expandObjectsTree": 1,
+        "expandClassesTree": 1,
+        "expandStoreysTree": 1
+    }
+}

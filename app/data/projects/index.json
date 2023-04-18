@@ -1,0 +1,25 @@
+{
+    "projects": [
+      {
+        "id": "Duplex",
+        "name": "Duplex"
+      },
+      {
+        "id": "Schependomlaan",
+        "name": "Schependomlaan"
+      },
+      {
+        "id": "House",
+        "name": "House"
+      },
+      {
+        "id":"Schependomlaan",
+        "name":"Schependomlaan"
+      },
+      {
+        "id":"FGCSA",
+        "name":"FGCSA"
+      }
+    ]
+  }
+      
